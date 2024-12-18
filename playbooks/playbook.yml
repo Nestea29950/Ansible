@@ -1,4 +1,3 @@
----
 - name: Installer Docker et Docker Compose
   hosts: webservers
   become: yes
@@ -20,11 +19,11 @@
         update_cache: yes
 
     - name: Ajouter la clé GPG officielle de Docker
-      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 
-    - name: Ajouter le repository Docker
+    - name: Ajouter le repository Docker pour Debian
       apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"  # Utilisez la version appropriée de Debian (bullseye, buster, etc.)
         state: present
 
     - name: Installer Docker
