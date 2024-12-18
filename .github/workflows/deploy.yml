@@ -19,3 +19,7 @@ jobs:
       - name: Tester la connexion SSH
         run: |
           ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "echo 'Connexion SSH réussie !'"
+
+      - name: Cloner le repository Git
+        run: |
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "cd /home/debian; git clone git@github.com:Nestea29950/Ansible.git /path/to/clone"
