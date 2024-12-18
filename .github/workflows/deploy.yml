@@ -24,10 +24,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt install git -y"
 
-      - name: Ajouter GitHub à known_hosts
-        run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts"
-
       - name: Cloner le repository Git ...
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "cd /home/debian && git clone git@github.com:Nestea29950/Ansible.git"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "cd /home/debian && git clone https://github.com/Nestea29950/Ansible.git"
