@@ -1,4 +1,4 @@
-name: Test SSH Connection
+name: Installation et déploiement pour Debian
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
 
       - name: Mise à jour de Debian ...
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt update"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt update -y"
 
       - name: Installation de Git ...
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt install git"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt install git -y"
 
       - name: Cloner le repository Git ...
         run: |
