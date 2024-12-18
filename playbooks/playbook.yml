@@ -1,10 +1,6 @@
 ---
-- name: Créer un répertoire sur la machine distante
-  hosts: webservers  # Utilise le groupe défini dans votre fichier hosts.ini
-  become: yes         # Utilisation des privilèges administrateur (sudo)
-  tasks:
-    - name: Créer le répertoire /home/debian/test
-      file:
-        path: /home/debian/test
-        state: directory
-        mode: '0755'
+- name: Cloner le repository Git contenant le fichier docker-compose.yml
+      git:
+        repo: 'https://github.com/Nestea29950/Ansible.git'
+        dest: '/home/debian/Ansible'
+        version: 'main' 
