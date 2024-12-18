@@ -1,4 +1,4 @@
-name: Vérifier la machine virtuelle
+name: Installer Ansible sur Ubuntu
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  check-env:
+  install-ansible:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,15 @@ jobs:
       - name: Cloner le repository
         uses: actions/checkout@v3
 
-      # Étape 2 : Afficher le contenu du répertoire courant
-      - name: Lister les fichiers
+      # Étape 2 : Mettre à jour les paquets et installer Ansible
+      - name: Installer Ansible
         run: |
-          ls -la
+          sudo apt update
+          sudo apt install -y software-properties-common
+          sudo add-apt-repository --yes --update ppa:ansible/ansible
+          sudo apt install -y ansible
+
+      # Étape 3 : Vérifier l'installation d'Ansible
+      - name: Vérification de l'installation
+        run: |
+          ansible --version
