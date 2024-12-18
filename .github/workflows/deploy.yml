@@ -31,4 +31,4 @@ jobs:
       # Étape 4 : Exécuter le playbook Ansible
       - name: Exécuter le playbook
         run: |
-          ansible-playbook -i playbooks/hosts.ini playbooks/playbook.yml
+          ansible-playbook -i inventory/hosts.ini playbooks/playbook.yml
