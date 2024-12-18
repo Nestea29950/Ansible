@@ -1,0 +1,22 @@
+name: Test Echo Secrets et Variables
+
+on:
+  push:
+    branches:
+      - main  # Déclenche l'action sur un push dans la branche "main"
+
+jobs:
+  echo-variables:
+    name: Echo des Variables et Secrets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Echo des secrets et variables
+        run: |
+          echo "🚀 Test des Secrets et Variables"
+          echo "Server IP : ${{ secrets.SERVER_IP }}"
+          echo "Environment : ${{ secrets.SSH_PRIVATE_KEY }}"
+          echo "⚠️ La clé privée SSH ne sera PAS affichée pour des raisons de sécurité."
