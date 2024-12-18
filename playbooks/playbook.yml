@@ -1,5 +1,5 @@
 ---
-- name: Cloner le repository Git contenant le fichier docker-compose.yml
+- name: Installer Docker et Docker Compose
   hosts: webservers
   become: yes
   tasks:
@@ -9,38 +9,36 @@
         dest: '/home/debian/Ansible'
         version: 'main'
 
-    - name: Installer Docker et Docker Compose
-      tasks:
-        - name: Installer les prérequis pour Docker
-          apt:
-            name:
-              - apt-transport-https
-              - ca-certificates
-              - curl
-              - software-properties-common
-            state: present
-            update_cache: yes
+    - name: Installer les prérequis pour Docker
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        update_cache: yes
 
-        - name: Ajouter la clé GPG officielle de Docker
-          shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - name: Ajouter la clé GPG officielle de Docker
+      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-        - name: Ajouter le repository Docker
-          apt_repository:
-            repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-            state: present
+    - name: Ajouter le repository Docker
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        state: present
 
-        - name: Installer Docker
-          apt:
-            name: docker-ce
-            state: latest
-            update_cache: yes
+    - name: Installer Docker
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: yes
 
-        - name: Télécharger et installer Docker Compose
-          shell: |
-            curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            chmod +x /usr/local/bin/docker-compose
+    - name: Télécharger et installer Docker Compose
+      shell: |
+        curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
 
-        - name: Lancer Docker Compose
-          command: docker-compose -f /home/debian/Ansible/docker-compose.yml up -d
-          args:
-            chdir: /home/debian/Ansible
+    - name: Lancer Docker Compose
+      command: docker-compose -f /home/debian/Ansible/docker-compose.yml up -d
+      args:
+        chdir: /home/debian/Ansible
