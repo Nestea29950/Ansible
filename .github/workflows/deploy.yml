@@ -24,6 +24,12 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt install git -y"
 
-      - name: Cloner le repository Git ...
+      - name: Vérifier si le repository est déjà cloné sinon mettre à jour
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "cd /home/debian && git clone https://github.com/Nestea29950/Ansible.git"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "
+            if [ ! -d /home/debian/Ansible ]; then
+              git clone https://github.com/Nestea29950/Ansible.git /home/debian/Ansible;
+            else
+              cd /home/debian/Ansible && git pull;
+            fi
+          "
