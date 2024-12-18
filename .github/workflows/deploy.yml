@@ -1,4 +1,4 @@
-name: Installer Ansible sur Ubuntu
+name: Déploiement avec Ansible
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  install-ansible:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,13 @@ jobs:
       - name: Cloner le repository
         uses: actions/checkout@v3
 
-      # Étape 2 : Mettre à jour les paquets et installer Ansible
+      # Étape 2 : Charger la clé SSH privée
+      - name: Charger la clé SSH privée
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Étape 3 : Installer Ansible
       - name: Installer Ansible
         run: |
           sudo apt update
@@ -22,7 +28,7 @@ jobs:
           sudo add-apt-repository --yes --update ppa:ansible/ansible
           sudo apt install -y ansible
 
-      # Étape 3 : Vérifier l'installation d'Ansible
-      - name: Vérification de l'installation
+      # Étape 4 : Exécuter le playbook Ansible
+      - name: Exécuter le playbook
         run: |
-          ansible --version
+          ansible-playbook -i playbooks/hosts.ini playbooks/playbook.yml
