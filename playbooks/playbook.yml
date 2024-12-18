@@ -38,6 +38,6 @@
         chmod +x /usr/local/bin/docker-compose
 
     - name: Lancer Docker Compose
-      command: docker-compose -f /home/debian/Ansible/docker-compose.yml up -d
+      command: docker compose -f /home/debian/Ansible/docker-compose.yml up -d
       args:
         chdir: /home/debian/Ansible
