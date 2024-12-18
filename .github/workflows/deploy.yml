@@ -1,4 +1,4 @@
-name: Installation et déploiement pour Debian
+name: Liste des fichiers sur Ubuntu
 
 on:
   push:
@@ -6,30 +6,14 @@ on:
       - main
 
 jobs:
-  test-ssh:
+  list-files:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Chargement de la clé SSH privée ...
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: |
-            ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Mise à jour de Debian ...
+      - name: Afficher le contenu de la racine
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt update -y"
+          ls -la /
 
-      - name: Installation de Git ...
+      - name: Afficher le contenu du répertoire courant
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "apt install git -y"
-
-      - name: Vérifier si le repository est déjà cloné sinon mettre à jour
-        run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.SERVER_IP }} "
-            if [ ! -d /home/debian/Ansible ]; then
-              git clone https://github.com/Nestea29950/Ansible.git /home/debian/Ansible;
-            else
-              cd /home/debian/Ansible && git pull;
-            fi
-          "
+          ls -la
