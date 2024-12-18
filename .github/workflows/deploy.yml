@@ -1,4 +1,4 @@
-name: Liste des fichiers sur Ubuntu
+name: Vérifier la machine virtuelle
 
 on:
   push:
@@ -6,14 +6,15 @@ on:
       - main
 
 jobs:
-  list-files:
+  check-env:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Afficher le contenu de la racine
-        run: |
-          ls -la /
+      # Étape 1 : Cloner le repository
+      - name: Cloner le repository
+        uses: actions/checkout@v3
 
-      - name: Afficher le contenu du répertoire courant
+      # Étape 2 : Afficher le contenu du répertoire courant
+      - name: Lister les fichiers
         run: |
           ls -la
