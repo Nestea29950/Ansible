@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Ajouter la clé privée SSH
+      - name: Test
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: |
