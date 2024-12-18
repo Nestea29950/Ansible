@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-ansible
 
     steps:
       # Étape 1 : Cloner le repository
@@ -20,13 +20,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Étape 3 : Installer Ansible
-      - name: Installer Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y software-properties-common
-          sudo add-apt-repository --yes --update ppa:ansible/ansible
-          sudo apt install -y ansible
+     
 
       # Étape 4 : Exécuter le playbook Ansible
       - name: Exécuter le playbook
