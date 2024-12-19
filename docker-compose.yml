@@ -28,7 +28,7 @@ services:
     container_name: serveur1
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.serveur1.rule=Host(`serveur1-vps.duckdns.org`)"
+      - "traefik.http.routers.serveur1.rule=Host(`serveur1-vps.duckdns.org `)"
       - "traefik.http.services.serveur1.loadbalancer.server.port=80"
     volumes:
       - ./projects/serveur1:/usr/share/nginx/html:ro
@@ -36,6 +36,21 @@ services:
     networks:
       linux-cours:
         ipv4_address: 192.168.100.3
+  
+  serveur2:
+    image: nginx:latest
+    container_name: serveur2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.serveur2.rule=Host(`serveur2-vps.duckdns.org `)"
+      - "traefik.http.services.serveur2.loadbalancer.server.port=80"
+    volumes:
+      - ./projects/serveur2:/usr/share/nginx/html:ro
+      - ./projects/serveur2/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      linux-cours:
+        ipv4_address: 192.168.100.10
+  
 
   nginx-prometheus-exporter:
     image: nginx/nginx-prometheus-exporter:latest
