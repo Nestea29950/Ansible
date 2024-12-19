@@ -28,7 +28,7 @@ services:
     container_name: serveur1
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.serveur1.rule=Host(`serveur1.localhost`)"
+      - "traefik.http.routers.serveur1.rule=Host(`serveur1-vps.duckdns.org `)"
       - "traefik.http.services.serveur1.loadbalancer.server.port=80"
     volumes:
       - ./projects/serveur1:/usr/share/nginx/html:ro
@@ -70,8 +70,6 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
-    volumes:
-      - ./grafana:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
